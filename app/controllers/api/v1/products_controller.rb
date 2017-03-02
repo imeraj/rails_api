@@ -1,6 +1,5 @@
 class Api::V1::ProductsController < ApplicationController
-    before_action :authenticate_with_token!, only: [:create, :update]
-    respond_to :json
+    before_action :authenticate_with_token!
 
     def index
         respond_with Product.all
@@ -21,7 +20,7 @@ class Api::V1::ProductsController < ApplicationController
 
     def update
         product = current_user.products.find(params[:id])
-        if product.update(product_params)
+        if product && product.update(product_params)
             render json: product, status: 200
         else
             render json: { errors: product.errors }, status: 422
