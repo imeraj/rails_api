@@ -16,4 +16,14 @@ class Api::V1::SessionsController < ApplicationController
         end
     end
 
+    def destroy
+        if signed_in?
+            current_user.generate_auth_token!
+            current_user.save
+            head 204
+        else
+            render json: { errors: "Please log in first" }, status: 422
+        end
+    end
+
 end

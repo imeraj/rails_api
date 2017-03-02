@@ -37,5 +37,7 @@ module RailsApi
       config.to_prepare do
         DeviseController.respond_to :html, :json
       end
+
+      config.sign_out_via = :delete
   end
 end
