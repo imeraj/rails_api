@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   end
 
   api_version(1, true) do
-    resources :users, :only => [:show, :create]
+    resources :users, :only => [:show, :create, :update]
   end
 
   api_version(2, false) do
