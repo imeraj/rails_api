@@ -3,11 +3,17 @@ class Api::V1::UsersController < ApplicationController
   respond_to :json
 
   def show
-    respond_with User.find(params[:id])
+    user = User.find(params[:id])
+    products = user.products
+
+    render json: user.as_json(:include => {
+            :products => {:only => :id}
+        })
   end
 
   def index
-      respond_with User.all
+      users = User.all
+      render json: { users: users }, status: 200
   end
 
   def create

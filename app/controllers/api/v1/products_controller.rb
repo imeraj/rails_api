@@ -2,7 +2,9 @@ class Api::V1::ProductsController < ApplicationController
     before_action :authenticate_with_token!
 
     def index
-        respond_with Product.all
+        products = current_user.products
+        
+        render json: { products: products }, status: 200
     end
 
     def show

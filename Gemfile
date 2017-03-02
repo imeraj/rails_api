@@ -36,7 +36,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 # API gems
-gem 'active_model_serializers'
+gem 'active_model_serializers', '~> 0.10.0'
 gem "devise"
 gem 'faker'
 
