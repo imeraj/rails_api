@@ -10,7 +10,12 @@ Rails.application.routes.draw do
   end
 
   api_version(1, true) do
-    resources :users, :only => [:show, :create, :update, :destroy]
+    post    '/signup',     to: 'users#create'
+
+    post    '/login',      to: 'sessions#create'
+    delete  '/logout',     to: 'sessions#destroy'
+
+    resources :users, :only => [:show, :update, :destroy]
   end
 
   api_version(2, false) do
