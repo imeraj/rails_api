@@ -6,7 +6,7 @@ class Api::V1::SessionsController < ApplicationController
         password = params[:session][:password]
         user = email.present? && User.find_by(email: email)
 
-        if user.valid_password?(password)
+        if user && user.valid_password?(password)
             sign_in user, store: false
             user.generate_auth_token!
             user.save
@@ -20,6 +20,7 @@ class Api::V1::SessionsController < ApplicationController
         if signed_in?
             current_user.generate_auth_token!
             current_user.save
+            sign_out
             head 204
         else
             render json: { errors: "Please log in first" }, status: 422

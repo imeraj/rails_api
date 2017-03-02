@@ -11,4 +11,9 @@ module Authenticable
     def signed_in?
         current_user.present?
     end
+
+    def sign_out
+        @current_user = nil
+    end
+
 end

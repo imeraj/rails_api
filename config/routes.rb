@@ -15,7 +15,8 @@ Rails.application.routes.draw do
     post    '/login',      to: 'sessions#create'
     delete  '/logout',     to: 'sessions#destroy'
 
-    resources :users, :only => [:show, :update, :destroy]
+    resources :users, :only => [:show, :update, :destroy] 
+    resources :products, :only => [:show, :index, :create, :update]
   end
 
   api_version(2, false) do
