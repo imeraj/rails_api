@@ -4,8 +4,7 @@ class Api::V1::UsersController < ApplicationController
 
   def show
     user = User.find(params[:id])
-    products = user.products
-
+    
     render json: user.as_json(:include => {
             :products => {:only => :id}
         })

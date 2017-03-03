@@ -7,7 +7,7 @@ class User < ApplicationRecord
 
    validates :auth_token, uniqueness: true
    has_many :products, dependent: :destroy
-
+   has_many :orders
 
    def generate_auth_token!
        begin
