@@ -7,6 +7,11 @@ class Api::V1::OrdersController < ApplicationController
         render json: { orders: orders }, status: 200
     end
 
+    def show
+        order = current_user.orders.find(params[:id])
+        render json: { order: order }, status: 200
+    end
+
     def create
         order = current_user.orders.build(order_params)
 
