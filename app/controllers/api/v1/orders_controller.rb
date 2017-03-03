@@ -9,7 +9,11 @@ class Api::V1::OrdersController < ApplicationController
 
     def show
         order = current_user.orders.find(params[:id])
-        render json: { order: order }, status: 200
+        # ETag caching: Consumer must send If-None-Match (Etag)
+        # or If-Modified-Since (Last Modified)
+        if stale?(etag: order, last_modified: order.created_at, public: true)
+            render json: { order: order }
+        end
     end
 
     def create

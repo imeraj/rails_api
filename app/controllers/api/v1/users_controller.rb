@@ -4,7 +4,7 @@ class Api::V1::UsersController < ApplicationController
 
   def show
     user = User.find(params[:id])
-    
+
     render json: user.as_json(:include => {
             :products => {:only => :id}
         })
@@ -12,6 +12,7 @@ class Api::V1::UsersController < ApplicationController
 
   def index
       users = User.all
+      expires_in 1.minute, public: true # HTTP caching for mostly static content
       render json: { users: users }, status: 200
   end
 
