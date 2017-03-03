@@ -16,7 +16,8 @@ class Api::V1::OrdersController < ApplicationController
         order = current_user.orders.build(order_params)
 
         if order.save
-            OrderMailer.send_confirmation(order).deliver
+            order.reload #we reload the object so the response displays the product objects
+            OrderMailer.delay.send_confirmation(order) # delayed job
             render json: order, status: 201, location: [current_user, order]
         else
             render json: { errors: order.erros }, status: 422

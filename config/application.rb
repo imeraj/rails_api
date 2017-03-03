@@ -39,5 +39,6 @@ module RailsApi
       end
 
       config.sign_out_via = :delete
+      config.active_job.queue_adapter = :delayed_job
   end
 end
