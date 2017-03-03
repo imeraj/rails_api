@@ -2,9 +2,17 @@ class Api::V1::ProductsController < ApplicationController
     before_action :authenticate_with_token!
 
     def index
-        products = Product.all
+        page = params[:page].present? ? params[:page] : 1
+        per_page = params[:per_page].present? ? params[:per_page]: 10
 
-        render json: products, status: 200
+        products = Product.all.page(page).per(params[per_page])
+
+        render json: { products: products, meta: {
+                                    pagination:
+                                         { per_page: per_page,
+                                           total_pages: products.total_pages,
+                                           total_objects: products.total_count }}},
+                                    status: 200
     end
 
     def show
@@ -34,6 +42,8 @@ class Api::V1::ProductsController < ApplicationController
         product.destroy
         head 204
     end
+
+    private
 
     def product_params
         params.require(:product).permit(:title, :price, :published)
