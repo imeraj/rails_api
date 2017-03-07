@@ -1,7 +1,8 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery with: :null_session
-  respond_to :json
+    protect_from_forgery with: :null_session
+    before_action :register_events
+    respond_to :json
 
-  include Authenticable
-
+    include Authenticable
+    include EventSubscriber
 end

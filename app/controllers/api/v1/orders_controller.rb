@@ -1,8 +1,5 @@
 class Api::V1::OrdersController < ApplicationController
-    include EventSubscriber
-
     before_action :authenticate_with_token!
-    before_action :register_events
     respond_to :json
 
     def index
