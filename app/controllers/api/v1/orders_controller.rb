@@ -1,5 +1,8 @@
 class Api::V1::OrdersController < ApplicationController
+    include EventSubscriber
+
     before_action :authenticate_with_token!
+    before_action :register_events
     respond_to :json
 
     def index
@@ -21,7 +24,7 @@ class Api::V1::OrdersController < ApplicationController
 
         if order.save
             order.reload #we reload the object so the response displays the product objects
-            OrderMailer.delay.send_confirmation(order) # delayed job
+            Publisher.broadcast_event('order.confirmation', order: order)
             render json: order, status: 201, location: [current_user, order]
         else
             render json: { errors: order.erros }, status: 422
